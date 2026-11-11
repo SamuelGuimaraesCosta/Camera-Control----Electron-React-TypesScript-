@@ -213,6 +213,21 @@ button.danger:hover {
 	display: block;
 }
 
+.tile:fullscreen {
+	width: 100vw;
+	height: 100vh;
+	aspect-ratio: auto;
+	border: 0;
+	border-radius: 0;
+	cursor: default;
+}
+.tile:fullscreen video {
+	object-fit: contain;
+}
+.tile-focused {
+	aspect-ratio: 16 / 9;
+}
+
 .overlay {
 	position: absolute;
 	top: 0;
@@ -227,6 +242,34 @@ button.danger:hover {
 	font-size: 13px;
 	font-weight: 500;
 	pointer-events: none;
+}
+
+.tile-controls {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 6px;
+	pointer-events: none;
+}
+.tile-controls button {
+	padding: 6px 10px;
+	background: rgba(0, 0, 0, 0.72);
+	font-size: 12px;
+	pointer-events: auto;
+}
+.tile-controls button:disabled {
+	opacity: 0.7;
+}
+.tile-action-error {
+	margin-right: auto;
+	color: var(--danger);
+	font-size: 12px;
+	text-shadow: 0 1px 3px #000;
 }
 
 .badge {

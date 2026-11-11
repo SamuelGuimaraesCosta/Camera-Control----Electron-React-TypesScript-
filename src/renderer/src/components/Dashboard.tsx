@@ -5,9 +5,7 @@ import CameraTile from './CameraTile';
 const COLUMNS = [1, 2, 3, 4];
 
 export default function Dashboard({ cameras }: { cameras: Camera[] }): JSX.Element {
-	const [hidden, setHidden] = useState<string[]>(() =>
-		JSON.parse(localStorage.getItem('hiddenCams') ?? '[]')
-	);
+	const [hidden, setHidden] = useState<string[]>(() => JSON.parse(localStorage.getItem('hiddenCams') ?? '[]'));
 	const [cols, setCols] = useState<number>(() => Number(localStorage.getItem('cols') ?? 2));
 	const [focusId, setFocusId] = useState<string | null>(null);
 
@@ -20,8 +18,7 @@ export default function Dashboard({ cameras }: { cameras: Camera[] }): JSX.Eleme
 		localStorage.setItem('cols', String(cols));
 	}, [cols]);
 
-	const toggle = (id: string): void =>
-		setHidden((h) => (h.includes(id) ? h.filter((x) => x !== id) : [...h, id]));
+	const toggle = (id: string): void => setHidden((h) => (h.includes(id) ? h.filter((x) => x !== id) : [...h, id]));
 
 	const focused = visible.find((c) => c.id === focusId);
 
@@ -31,11 +28,7 @@ export default function Dashboard({ cameras }: { cameras: Camera[] }): JSX.Eleme
 				<div>
 					Colunas:{' '}
 					{COLUMNS.map((n) => (
-						<button
-							key={n}
-							className={cols === n ? 'active' : ''}
-							onClick={() => setCols(n)}
-						>
+						<button key={n} className={cols === n ? 'active' : ''} onClick={() => setCols(n)}>
 							{n}
 						</button>
 					))}
@@ -43,11 +36,7 @@ export default function Dashboard({ cameras }: { cameras: Camera[] }): JSX.Eleme
 				<div className="checks">
 					{cameras.map((c) => (
 						<label key={c.id}>
-							<input
-								type="checkbox"
-								checked={!hidden.includes(c.id)}
-								onChange={() => toggle(c.id)}
-							/>
+							<input type="checkbox" checked={!hidden.includes(c.id)} onChange={() => toggle(c.id)} />
 							{c.name}
 						</label>
 					))}
@@ -56,20 +45,17 @@ export default function Dashboard({ cameras }: { cameras: Camera[] }): JSX.Eleme
 
 			{focused ? (
 				<div>
-					<button onClick={() => setFocusId(null)}>← Voltar ao grid</button>
-					<CameraTile cam={focused} />
+					<CameraTile cam={focused} isFocused onMaximize={() => setFocusId(null)} />
 				</div>
 			) : (
 				<div className="grid" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
 					{visible.map((c) => (
-						<CameraTile key={c.id} cam={c} onDoubleClick={() => setFocusId(c.id)} />
+						<CameraTile key={c.id} cam={c} onDoubleClick={() => setFocusId(c.id)} onMaximize={() => setFocusId(c.id)} />
 					))}
 				</div>
 			)}
 
-			{visible.length === 0 && (
-				<p>Nenhuma câmera visível. Cadastre em &quot;Câmeras&quot;.</p>
-			)}
+			{visible.length === 0 && <p>Nenhuma câmera visível. Cadastre em &quot;Câmeras&quot;.</p>}
 		</div>
 	);
 }

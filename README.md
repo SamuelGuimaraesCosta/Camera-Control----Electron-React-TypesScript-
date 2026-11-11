@@ -7,7 +7,8 @@ A desktop application for managing and monitoring RTSP cameras on your local net
 - View multiple live camera feeds in a configurable 1–4 column dashboard.
 - Add, edit, and remove cameras with an RTSP address, path, and optional credentials.
 - Scan the local subnet for devices with the default RTSP port (554) open, then add discovered addresses.
-- Hide individual cameras from the dashboard or double-click a feed to focus on it.
+- Hide individual cameras from the dashboard, maximize a feed, or open it in fullscreen.
+- Enable audio per camera when its RTSP stream includes an audio track.
 - Store camera settings locally; camera passwords are protected using Electron's secure storage.
 
 > Network discovery checks whether port 554 is open. It does not verify that a device is a camera or that its stream credentials are valid.
@@ -17,6 +18,8 @@ A desktop application for managing and monitoring RTSP cameras on your local net
 Most cameras expose video over RTSP, which browsers cannot play directly. Camera Control starts the bundled MediaMTX process, pulls each camera's RTSP stream on demand, and presents it to the app over WebRTC/WHEP.
 
 The app generates MediaMTX configuration in its Electron user-data directory. It uses the local WHEP endpoint on port `8889` and WebRTC media on UDP port `8189`. Keep these ports available on the computer running the app, and make sure that computer can reach the cameras over the network.
+
+Camera feeds start muted. Use **Ativar áudio** on a feed with an audio track to listen; audio support depends on the camera's RTSP stream.
 
 ## Requirements
 
